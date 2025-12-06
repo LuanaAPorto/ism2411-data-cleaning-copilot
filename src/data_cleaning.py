@@ -18,7 +18,7 @@ def load_data(file_path:str):
 
 #This code will standardize column names (for example, lowercase and underscores).
 
-def standardize_column_names(df:pd.DataFrame) -> pd.DataFrame:
+def clean_column_names(df:pd.DataFrame) -> pd.DataFrame:
     """Standardize column names to lowercase with underscores."""
     df.columns = df.columns.str.strip().str.lower().str.replace(' ', '_')
     return df
