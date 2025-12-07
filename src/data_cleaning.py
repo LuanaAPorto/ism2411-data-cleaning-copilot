@@ -17,6 +17,7 @@ def load_data(file_path:str):
 #Github Copilot was used in all the code below
 
 #This code will standardize column names, change all letters to lowercase,replace spaces with underscores and removes leading whitespace.
+#This is to avoid issues when accessing colums later on
 
 def clean_column_names(df:pd.DataFrame) -> pd.DataFrame:                
     """Standardize column names to lowercase with underscores."""
@@ -25,11 +26,13 @@ def clean_column_names(df:pd.DataFrame) -> pd.DataFrame:
 
 
 #This code will handle missing prices and quantities (dropping or/and filling strategies) — but be consistent). Handle NaN values in 'price' and 'quantity' columns
+#This is because it can't do any calculations with missing values
 
 def handle_missing_values(df:pd.DataFrame) -> pd.DataFrame:
     """Handle missing values in 'price' and 'quantity' columns."""
-    df['price'].fillna(df['price'].median(), inplace=True) #fill NaN in price with median
-    df['quantity'].fillna(0, inplace=True) #fill NaN in quantity with 0
-    return df #returns the modified dataframe
+    df_modified = df.copy() #create a copy of the dataframe to avoid modifying the original
+    df_modified['price'].fillna(df['price'].median(), inplace=True) #fill NaN in price with median
+    df_modified['quantity'].fillna(0, inplace=True) #fill NaN in quantity with 0
+    return df_modified #returns the modified dataframe
 
 
