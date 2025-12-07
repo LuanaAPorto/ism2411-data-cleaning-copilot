@@ -19,10 +19,20 @@ def load_data(file_path:str):
 #This code will standardize column names, change all letters to lowercase,replace spaces with underscores and removes leading whitespace.
 #This is to avoid issues when accessing colums later on
 
+
 def clean_column_names(df:pd.DataFrame) -> pd.DataFrame:                
     """Standardize column names to lowercase with underscores."""
     df.columns = df.columns.str.strip().str.lower().str.replace(' ', '_') #removes leading whitespace, converts to lowercase, replaces spaces with underscores
     return df #returns the modified dataframe
+
+#This code will convert key columns to the correct numeric types ( price to float, quantity to int )
+#This is because these columns will be used in calculations later on, and need to be in the correct format
+def clean_column_values(df:pd.DataFrame) -> pd.DataFrame:
+    """Convert 'price' to float and 'quantity' to int."""
+    df_modified = df.copy() #create a copy of the dataframe to avoid modifying the original
+    df_modified['price'] = pd.to_numeric(df_modified['price'], errors='coerce') #convert price to float, set errors to NaN
+    df_modified['quantity'] = pd.to_numeric(df_modified['quantity'], errors='coerce').astype('Int64') #convert quantity to int, set errors to NaN
+    return df_modified #returns the modified dataframe
 
 
 #This code will handle missing prices and quantities (dropping or/and filling strategies) — but be consistent). Handle NaN values in 'price' and 'quantity' columns
