@@ -21,7 +21,7 @@ def load_data(file_path:str):
 
 def clean_column_names(df:pd.DataFrame) -> pd.DataFrame:                
     """Standardize column names to lowercase with underscores."""
-    df.columns = df.columns.str.strip().str.lower().str.replace(' ', '_'). #removes leading whitespace, converts to lowercase, replaces spaces with underscores
+    df.columns = df.columns.str.strip().str.lower().str.replace(' ', '_') #removes leading whitespace, converts to lowercase, replaces spaces with underscores
     return df #returns the modified dataframe
 
 
@@ -38,7 +38,7 @@ def handle_missing_values(df:pd.DataFrame) -> pd.DataFrame:
 #This code will remove rows that have invalid data ( negative prices or quantities )
 #This is because these values don't make sense, and were definetely entered incorrectly, so we shouldn't use them in our analysis
 
-def remove_invalid_data(df:pd.DataFrame) -> pd.DataFrame:
+def remove_invalid_rows(df:pd.DataFrame) -> pd.DataFrame:
     """Remove rows with negative 'price' or 'quantity'."""
     df_modified = df[(df['price'] >= 0) & (df['quantity'] >= 0)] #filter out rows with negative price or quantity
     return df_modified #returns the modified dataframe
