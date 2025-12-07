@@ -43,7 +43,7 @@ def clean_column_values(df:pd.DataFrame) -> pd.DataFrame:
     """Convert 'price' to float and 'quantity' to int."""
     df_modified = df.copy() #create a copy of the dataframe to avoid modifying the original
     df_modified['price'] = pd.to_numeric(df_modified['price'], errors='coerce') #convert price to float, set errors to NaN
-    df_modified['quantity'] = pd.to_numeric(df_modified['quantity'], errors='coerce').astype('Int64') #convert quantity to int, set errors to NaN
+    df_modified['qty'] = pd.to_numeric(df_modified['qty'], errors='coerce').astype('Int64') #convert quantity to int, set errors to NaN
     return df_modified #returns the modified dataframe
 
 
@@ -54,7 +54,7 @@ def handle_missing_values(df:pd.DataFrame) -> pd.DataFrame:
     """Handle missing values in 'price' and 'quantity' columns."""
     df_modified = df.copy() #create a copy of the dataframe to avoid modifying the original
     df_modified['price'].fillna(df['price'].median(), inplace=True) #fill NaN in price with median
-    df_modified['quantity'].fillna(0, inplace=True) #fill NaN in quantity with 0
+    df_modified['qty'].fillna(0, inplace=True) #fill NaN in quantity with 0
     return df_modified #returns the modified dataframe
 
 #This code will remove rows that have invalid data ( negative prices or quantities )
@@ -62,7 +62,7 @@ def handle_missing_values(df:pd.DataFrame) -> pd.DataFrame:
 
 def remove_invalid_rows(df:pd.DataFrame) -> pd.DataFrame:
     """Remove rows with negative 'price' or 'quantity'."""
-    df_modified = df[(df['price'] >= 0) & (df['quantity'] >= 0)] #filter out rows with negative price or quantity
+    df_modified = df[(df['price'] >= 0) & (df['qty'] >= 0)] #filter out rows with negative price or quantity
     return df_modified #returns the modified dataframe
 
 if __name__ == "__main__":
