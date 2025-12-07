@@ -25,6 +25,18 @@ def clean_column_names(df:pd.DataFrame) -> pd.DataFrame:
     df.columns = df.columns.str.strip().str.lower().str.replace(' ', '_') #removes leading whitespace, converts to lowercase, replaces spaces with underscores
     return df #returns the modified dataframe
 
+#This code will do the same as the previous one, but now from string columns
+#Remove whitespace from text fields that should be numbers or strings
+#Because they prvent correct type conversion later on
+
+def clean_string_columns(df:pd.DataFrame) -> pd.DataFrame:
+    """Remove leading and trailing whitespace from string columns."""
+    df_modified = df.copy() #create a copy of the dataframe to avoid modifying the original
+    str_cols = df_modified.select_dtypes(include=['object']).columns #select only string columns
+    for col in str_cols:
+        df_modified[col] = df_modified[col].str.strip() #remove leading and trailing whitespace
+    return df_modified #returns the modified dataframe
+
 #This code will convert key columns to the correct numeric types ( price to float, quantity to int )
 #This is because these columns will be used in calculations later on, and need to be in the correct format
 def clean_column_values(df:pd.DataFrame) -> pd.DataFrame:
